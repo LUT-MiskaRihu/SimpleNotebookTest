@@ -4,9 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="@color/teal_700"
+    android:backgroundTintMode="screen"
     tools:context=".MainActivity">
 
     <LinearLayout
+        android:id="@+id/llMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -15,40 +18,86 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/etFilename"
+        <LinearLayout
+            android:id="@+id/llMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Filename"
-            android:inputType="textPersonName" />
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btnLoad"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <EditText
+                    android:id="@+id/etFilename"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Filename"
+                    android:inputType="textPersonName" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/btnLoad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="loadFile"
+                    android:text="Load" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/btnSave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="saveFile"
+                    android:text="Save" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="loadFile"
-            android:text="Load" />
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
 
-        <Button
-            android:id="@+id/btnSave"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="saveFile"
-            android:text="Save" />
-
-        <TextView
-            android:id="@+id/twLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Editor:" />
-
-        <EditText
-            android:id="@+id/etEditor"
+        <LinearLayout
+            android:id="@+id/llEditor"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:ems="10"
-            android:gravity="start|top"
-            android:inputType="textMultiLine" />
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/etEditor"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="File contents"
+                android:inputType="textMultiLine" />
+
+        </LinearLayout>
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

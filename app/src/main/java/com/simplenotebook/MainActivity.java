@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     EditText etEditor;
     Button btnLoad;
     Button btnSave;
-    TextView twLabel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
         etEditor = findViewById(R.id.etEditor);
         btnLoad = findViewById(R.id.btnLoad);
         btnSave = findViewById(R.id.btnSave);
-        twLabel = findViewById(R.id.twLabel);
     }
 
     public void loadFile(View view) {
