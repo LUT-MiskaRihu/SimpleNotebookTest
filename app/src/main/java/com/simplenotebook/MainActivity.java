@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -47,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 FileInputStream fileInputStream = context.openFileInput(sFilename);
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
-                String sLine = "";
+                String sLine;
                 while ((sLine = bufferedReader.readLine()) != null) {
                     etEditor.append(sLine + "\n");
                 }
