@@ -1,7 +1,11 @@
 package com.simplenotebook;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     Button btnLoad;
     Button btnSave;
 
+    String path = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,30 +43,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loadFile(View view) {
-        String sFilename = etFilename.getText().toString();
+        //if (path != null) {
+            String sFilename = etFilename.getText().toString();
+            etFilename.setText(sFilename);
 
-        if (sFilename.isEmpty()) {
-            Toast.makeText(MainActivity.this, "Enter a filename", Toast.LENGTH_SHORT).show();
-        } else {
-            etEditor.setText("");
-            try {
-                FileInputStream fileInputStream = context.openFileInput(sFilename);
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
-                String sLine;
-                while ((sLine = bufferedReader.readLine()) != null) {
-                    etEditor.append(sLine + "\n");
+            if (sFilename.isEmpty()) {
+                Toast.makeText(MainActivity.this, "Enter a filename", Toast.LENGTH_SHORT).show();
+            } else {
+                etEditor.setText("");
+                try {
+                    FileInputStream fileInputStream = context.openFileInput(sFilename);
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
+                    String sLine;
+                    while ((sLine = bufferedReader.readLine()) != null) {
+                        etEditor.append(sLine + "\n");
+                    }
+                    bufferedReader.close();
+                    fileInputStream.close();
+                    Toast.makeText(MainActivity.this, "File loaded successfully", Toast.LENGTH_LONG).show();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                    Toast.makeText(MainActivity.this, "File not found", Toast.LENGTH_SHORT).show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(MainActivity.this, "Loading failed: " + e, Toast.LENGTH_LONG).show();
                 }
-                bufferedReader.close();
-                fileInputStream.close();
-                Toast.makeText(MainActivity.this, "File loaded successfully", Toast.LENGTH_LONG).show();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-                Toast.makeText(MainActivity.this, "File not found", Toast.LENGTH_SHORT).show();
-            } catch (IOException e) {
-                e.printStackTrace();
-                Toast.makeText(MainActivity.this, "Loading failed: " + e, Toast.LENGTH_LONG).show();
             }
-        }
+        /*} else {
+            Toast.makeText(context,"No file selected.", Toast.LENGTH_SHORT);
+        }*/
     }
 
     public void saveFile(View view) {
@@ -86,5 +97,26 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    int requestCode = 1;
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode,resultCode,data);
+        if (requestCode == requestCode && resultCode == Activity.RESULT_OK) {
+            if(data == null) {
+                return;
+            }
+            Uri uri = data.getData();
+            path = uri.getPath();
+            Toast.makeText(context,path,Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void openFileChooser(View view) {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");
+        startActivityForResult(intent, requestCode);
+        //loadFile(View view);
     }
 }
